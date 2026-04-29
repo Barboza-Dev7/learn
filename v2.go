@@ -14,7 +14,7 @@ func handleConnection(conn net.Conn){
 
 	buf := make([]byte, 1024)
 	for {
-		n, err := conn.Read(buf)
+		n, err := conn.Read(buf) //Espera datos (bloquea)
 		if err == io.EOF { //“Fin del flujo de datos” (End Of File)
 			log.Println("Moto desconectada")
 			return
