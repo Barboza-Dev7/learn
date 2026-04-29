@@ -28,7 +28,7 @@ func handleConnection(conn net.Conn){
 }
 
 func main(){
-	listener, err := net.Listen()
+	listener, err := net.Listen("tcp", ":5000")
 	if err != nil {
 		log.Fatal(err)
 	}
