@@ -8,7 +8,7 @@ import(
 
 func main(){
 	ln, err := net.Listen("tcp", ":5000")
-	if erro != nil {
+	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println("Escuchando...")
