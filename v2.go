@@ -8,7 +8,7 @@ import(
 	"log"
 	"io" //Leer/escribir datos (streams)
 )
-func hanldeConnection(conn net.Conn){
+func handleConnection(conn net.Conn){
 	defer conn.Close()
 	log.Println("Moto conectada: ", conn.RemoteAddr())
 
