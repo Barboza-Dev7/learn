@@ -104,6 +104,7 @@ func handleConnection(conn net.Conn){
 			imei := parseIMEI(raw[4:12]) //Toma de la posciion 4 hasta el 11
 			log.Println("LOGIN - IMEI: ", imei)
 			conn.Write(buildResponse(0x01, serial))
+			log.Println(buildResponse(0x01, serial))
 		}
 	}
 }
