@@ -19,14 +19,14 @@ func buildResponse(protocol uint8, serial uint16) []byte {
 	return []byte {
 		0x78, 0x78, 
 		payload[0], payload[1], payload[2], payload[3],
-		byte(crc >> 8), byte(crt & 0xFF),
-		0x0D, 0x0A
+		byte(crc >> 8), byte(crc & 0xFF),
+		0x0D, 0x0A,
 	}
 }
 
 func handleConnection(conn net.Conn){
 	defer conn.Close()
-	log.Printn("Moto conectada: ", conn.RemoteAddr())
+	log.Println("Moto conectada: ", conn.RemoteAddr())
 
 	buf := make([]byte, 1024)
 	for {
@@ -40,9 +40,9 @@ func handleConnection(conn net.Conn){
 			return
 		}
 		raw := buf[:n]
-		log.Println("Recibido: ", hex.EcodeToString(raw))
+		log.Println("Recibido: ", hex.EncodeToString(raw))
 
-		if raw[0] != 78 & raw[1] != 78 {
+		if raw[0] != 0x78 || raw[1] != 0x78 {
 			log.Println("Paquete invalido")
 			continue
 		}
@@ -54,7 +54,7 @@ func handleConnection(conn net.Conn){
 		case 0x01:
 			imei := parseIMEI(raw[4:12]) //Toma de la posciion 4 hasta el 11
 			log.Println("LOGIN - IMEI: ", imei)
-			conn.Write(builResponde(0x01, serial))
+			conn.Write(buildResponse(0x01, serial))
 		}
 	}
 }
