@@ -21,7 +21,7 @@ func handleConnection(conn net.Conn){
 		log.Println(err)
 		return
 	}
-	log.Println(data)
+	log.Println(raw)
 }
 
 func main(){
