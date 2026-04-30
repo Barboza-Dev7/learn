@@ -33,7 +33,7 @@ func handleConnection(conn net.Conn){
 		conn.Write(raw)	
 	case 0x12:
 		data := hex.EncodeToString(raw)
-		log.Println(data[12:17], " - ", data[16:21])
+		log.Println(data)
 	}
 	}
 }
