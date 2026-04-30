@@ -28,8 +28,8 @@ func handleConnection(conn net.Conn){
 
 	switch protocol {
 	case 0x01:
+		log.Println(raw)
 		conn.Write(buf[:num])	
-
 	case 0x12:
 		log.Println(raw[12:17], " - ", raw[16:21])
 	}
