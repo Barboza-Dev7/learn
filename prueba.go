@@ -24,6 +24,7 @@ func handleConnection(conn net.Conn){
 		return
 	}
 	log.Println(hex.EncodeToString(buf[:data]))
+	conn.Write(buf[:data])
 	}
 }
 
