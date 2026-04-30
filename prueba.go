@@ -8,6 +8,7 @@ import (
 )
 
 func handleConnection(conn net.Conn){
+	defer conn.Close()
 	log.Println("Conectado: ", conn.RemoteAddr())
 
 	buf := make([]byte, 1024)
@@ -23,15 +24,16 @@ func handleConnection(conn net.Conn){
 		log.Println(err)
 		return
 	}
-	raw := hex.EncodeToString(buf[:num])
+	raw := buf[:num]
 	protocol := raw[3]
 
 	switch protocol {
 	case 0x01:
-		log.Println(raw)
-		conn.Write(buf[:num])	
+		log.Println(hex.EncodeToString(raw))
+		conn.Write(raw)	
 	case 0x12:
-		log.Println(raw[12:17], " - ", raw[16:21])
+		data := hex.EncodeToString(raw)
+		log.Println(data[12:17], " - ", data[16:21])
 	}
 	}
 }
