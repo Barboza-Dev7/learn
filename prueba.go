@@ -4,6 +4,7 @@ import (
 	"log"
 	"net"
 	"io"
+	"encoding/hex"
 )
 
 func handleConnection(conn net.Conn){
@@ -21,7 +22,7 @@ func handleConnection(conn net.Conn){
 		log.Println(err)
 		return
 	}
-	log.Println(raw)
+	log.Println(hex.EncodeToString(raw))
 }
 
 func main(){
