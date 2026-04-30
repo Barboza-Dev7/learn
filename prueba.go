@@ -13,7 +13,7 @@ func handleConnection(conn net.Conn){
 	buf := make([]byte, 1024)
 
 	for {
-	data, err := conn.Read(buf)
+	num, err := conn.Read(buf)
 
 	if err == io.EOF {
 		log.Println("Desconectado: ", conn.RemoteAddr())
@@ -23,8 +23,16 @@ func handleConnection(conn net.Conn){
 		log.Println(err)
 		return
 	}
-	log.Println(hex.EncodeToString(buf[:data]))
-	conn.Write(buf[:data])
+	raw := hex.EncodeToString(buf[:num])
+	protocol := raw[3]
+
+	switch protocol {
+	case 0x01:
+		conn.Write(buf[:num])	
+
+	case 0x12:
+		log.Println(raw[12:17], " - ", raw[16:21])
+	}
 	}
 }
 
