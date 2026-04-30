@@ -11,7 +11,7 @@ func handleConnection(conn net.Conn){
 
 	buf := make([]byte, 1024)
 	data, err := conn.Read(buf)
-	raw := buf(:data)
+	raw := buf[:data]
 
 	if err == io.EOF {
 		log.Println("Desconectado: ", conn.RemoteAddr())
