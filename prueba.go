@@ -27,8 +27,15 @@ func hanldeConnection(conn net.Conn){
 		if n < 6 {
 			continue
 		}
+
 		raw := buf[:n]
+		protocol := raw[3]
 		log.Println(hex.EncodeToString(raw))
+
+		switch protocol {
+		case 0x01: 
+			conn.Write(raw)
+		}
 	}
 }
 
