@@ -43,7 +43,7 @@ func hanldeConnection(conn net.Conn){
 			lat := float64(latRaw) / 1800000.0
 			log := float64(logRaw) / 1800000.0
 
-			log.Println("lat: ", lat " - ", "log: ", log, )
+			log.Println("lat: ", lat, " - ", "log: ", log)
 		}
 	}
 }
