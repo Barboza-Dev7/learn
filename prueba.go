@@ -20,7 +20,8 @@ func hanldeConnection(conn net.Conn){
 			log.Println(err)
 			return
 		}
-		if io.EOF == nil {
+		if err == io.EOF {
+			log.Println("Desconectado")
 			return
 		}
 		if n < 6 {
