@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"encoding/binary"
 	"io"
+	"math"
 )
 
 func hanldeConnection(conn net.Conn){
@@ -31,7 +32,7 @@ func hanldeConnection(conn net.Conn){
 
 		raw := buf[:n]
 		protocol := raw[3]
-		log.Println(hex.EncodeToString(raw))
+		//log.Println(hex.EncodeToString(raw))
 
 		switch protocol {
 		case 0x01: 
@@ -43,7 +44,10 @@ func hanldeConnection(conn net.Conn){
 			lat := float64(latRaw) / 1800000.0
 			lon := float64(lonRaw) / 1800000.0
 
-			log.Println("lat: ", lat, " - ", "lon: ", lon)
+			latClean := math.Round(lat*1e6) / 1e6
+			lonClean := math.Round(lon*1e6) / 1e6
+
+			log.Println("lat: ", latClean, " - ", "lon: ", lonClean)
 		}
 	}
 }
