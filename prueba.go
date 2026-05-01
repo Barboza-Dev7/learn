@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"net"
-	"encoding/hex"
+	//"encoding/hex"
 	"encoding/binary"
 	"io"
 	"math"
