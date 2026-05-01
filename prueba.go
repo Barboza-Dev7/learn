@@ -3,48 +3,41 @@ package main
 import (
 	"log"
 	"net"
-	"io"
 	"encoding/hex"
+	"io"
 )
 
-func handleConnection(conn net.Conn){
+func hanldeConnection(conn net.Conn){
 	defer conn.Close()
-	log.Println("Conectado: ", conn.RemoteAddr())
+	log.Println("Conectada: ", conn.RemoteAddr())
 
-	buf := make([]byte, 1024)
+	buf := make([]byte, 128)
 
 	for {
-	num, err := conn.Read(buf)
+		n, err := conn.Read(buf)
 
-	if err == io.EOF {
-		log.Println("Desconectado: ", conn.RemoteAddr())
-		return
-	}
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	raw := buf[:num]
-	protocol := raw[3]
-
-	switch protocol {
-	case 0x01:
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		if io.EOF == nil {
+			return
+		}
+		if n < 6 {
+			continue
+		}
+		raw := buf[:n]
 		log.Println(hex.EncodeToString(raw))
-		conn.Write(raw)	
-	case 0x12:
-		data := hex.EncodeToString(raw)
-		log.Println(data)
-	}
 	}
 }
 
-func main(){
+func main() {
 	listen, err := net.Listen("tcp", ":5000")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Println("Escuchando...")
+	log.Println("Escuchando ...")
 
 	for {
 		conn, err := listen.Accept()
@@ -52,6 +45,6 @@ func main(){
 			log.Println(err)
 			continue
 		}
-		go handleConnection(conn)
+		go hanldeConnection(conn)
 	}
 }
