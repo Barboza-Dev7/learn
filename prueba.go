@@ -4,7 +4,7 @@ import (
 	"log"
 	"net"
 	"encoding/hex"
-	"encodign/binary"
+	"encoding/binary"
 	"io"
 )
 
