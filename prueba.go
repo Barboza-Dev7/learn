@@ -38,12 +38,12 @@ func hanldeConnection(conn net.Conn){
 			conn.Write(raw)
 		case 0x12:
 			latRaw := binary.BigEndian.Uint32(raw[11:15])
-			logRaw := binary.BigEndian.Uint32(raw[15:19])
+			lonRaw := binary.BigEndian.Uint32(raw[15:19])
 
 			lat := float64(latRaw) / 1800000.0
-			log := float64(logRaw) / 1800000.0
+			lon := float64(lonRaw) / 1800000.0
 
-			log.Println("lat: ", lat, " - ", "log: ", log)
+			log.Println("lat: ", lat, " - ", "lon: ", lon)
 		}
 	}
 }
