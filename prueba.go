@@ -4,6 +4,7 @@ import (
 	"log"
 	"net"
 	"encoding/hex"
+	"encodign/binary"
 	"io"
 )
 
@@ -35,6 +36,14 @@ func hanldeConnection(conn net.Conn){
 		switch protocol {
 		case 0x01: 
 			conn.Write(raw)
+		case 0x12:
+			latRaw := binary.BigEndian.Uint32(raw[11:15])
+			logRaw := binary.BigEndian.Uint32(raw[15:19])
+
+			lat := float64(latRaw) / 1800000.0
+			log := float64(logRaw) / 1800000.0
+
+			log.Println("lat: ", lat " - ", "log: ", log, )
 		}
 	}
 }
